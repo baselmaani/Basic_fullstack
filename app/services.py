@@ -9,11 +9,11 @@ def generate_token(user_id):
         'iat': datetime.utcnow(),
         'sub': user_id,
     }
-    return jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256')
+    return jwt.encode(payload, "SECRET_KEY", algorithm='HS256')
 
 
 def decode_token(token):
-    payload = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
+    payload = jwt.decode(token, "SECRET_KEY", algorithms=['HS256'])
     return payload['sub']
 
 def hash_password(password):

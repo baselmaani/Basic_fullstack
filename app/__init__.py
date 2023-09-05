@@ -4,20 +4,22 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from .resources import ns, Login,Signup  
 from .extensions import  api,db  
-app = Flask(__name__)
-url = 'mysql://root:12345@127.0.0.1:3306/dbname'
-app.config['SQLALCHEMY_DATABASE_URI'] = url
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
+def create_app():
+    app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    api.init_app(app)
+    db.init_app(app)
+    api.add_namespace(ns)
+    api.add_resource(Login, '/auth/login')
+    api.add_resource(Signup, '/auth/signup')
+    return app
 
-db.init_app(app)
-api.init_app(app)
 
-api.add_resource(Signup, '/signup')
-api.add_resource(Login, '/login')
-api.add_namespace(ns)
-if __name__ == '__main__':
-    app.run(debug=True)
+create_app().run(debug=True)
+
+
 
 
 

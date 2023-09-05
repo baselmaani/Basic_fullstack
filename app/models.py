@@ -8,3 +8,4 @@ class User(db.Model):
     role=db.Column(db.String(120),nullable=False)
   
 
+
